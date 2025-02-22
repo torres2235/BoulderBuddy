@@ -1,1 +1,1 @@
-# BoulderingBuddy
+# BoulderBuddy
