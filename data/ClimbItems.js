@@ -24,7 +24,7 @@ export const data = [
     title: "tougher v3",
     grade: "v3",
     color: "yellow",
-    date: "2/1/2025",
+    date: "2/3/2025",
     rating: 3.5,
     completed: false,
     tags: "dyno",
