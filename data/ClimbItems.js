@@ -7,7 +7,7 @@ export const data = [
     date: "2/1/2025",
     rating: 4,
     completed: true,
-    tags: "",
+    tags: [],
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const data = [
     date: "2/2/2025",
     rating: 5,
     completed: true,
-    tags: "",
+    tags: [],
   },
   {
     id: 3,
@@ -27,6 +27,6 @@ export const data = [
     date: "2/3/2025",
     rating: 3.5,
     completed: false,
-    tags: "dyno",
+    tags: ["dyno"],
   },
 ];
