@@ -21,7 +21,7 @@ export const data = [
   },
   {
     id: 3,
-    title: "tougher v3",
+    title: "Tougher v3",
     grade: "v3",
     color: "yellow",
     date: "2/3/2025",

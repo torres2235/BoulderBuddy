@@ -13,7 +13,7 @@ export const Colors = {
     text: black,
     background: background,
     icon: black,
-    button: green,
+    button: blue,
   },
   dark: {
     text: "white",

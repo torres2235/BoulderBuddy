@@ -96,13 +96,13 @@ export default function ViewClimbScreen() {
       </View>
       <View style={styles.inputContainer}>
         <Pressable onPress={handleSave} style={styles.saveButton}>
-          <Text styles={styles.saveButtonText}>Save</Text>
+          <Text style={styles.saveButtonText}>Save</Text>
         </Pressable>
         <Pressable
           onPress={() => router.push(`/climbs/${id}`)}
           style={[styles.saveButton, { backgroundColor: "red" }]}
         >
-          <Text styles={[styles.saveButtonText, { color: "white" }]}>
+          <Text style={[styles.saveButtonText, { color: "white" }]}>
             Cancel
           </Text>
         </Pressable>

@@ -75,19 +75,14 @@ export default function ViewClimbScreen() {
         <Text style={styles.text}>{climb.tags}</Text>
       </View>
       <View style={styles.textContainer}>
-        <Pressable
-          onPress={() => handlePress(climb.id)}
-          style={styles.saveButton}
-        >
-          <Text styles={styles.saveButtonText}>Edit</Text>
+        <Pressable onPress={() => handlePress(climb.id)} style={styles.Button}>
+          <Text style={styles.ButtonText}>Edit</Text>
         </Pressable>
         <Pressable
           onPress={() => router.push("/")}
-          style={[styles.saveButton, { backgroundColor: "red" }]}
+          style={[styles.Button, { backgroundColor: "red" }]}
         >
-          <Text styles={[styles.saveButtonText, { color: "white" }]}>
-            Return
-          </Text>
+          <Text style={[styles.ButtonText, { color: "white" }]}>Return</Text>
         </Pressable>
       </View>
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
@@ -115,12 +110,12 @@ function createStyles(theme, colorScheme) {
     text: {
       color: theme.text,
     },
-    saveButton: {
+    Button: {
       backgroundColor: theme.button,
       borderRadius: 5,
       padding: 10,
     },
-    saveButtonText: {
+    ButtonText: {
       fontSize: 18,
       color: colorScheme === "dark" ? "black" : "white",
     },
