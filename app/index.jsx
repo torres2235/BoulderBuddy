@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import Octicons from "@expo/vector-icons/Octicons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 //import { Colors } from "@/constants/Colors";
 import { ThemeContext } from "@/context/ThemeContext";
@@ -121,6 +122,18 @@ export default function Index() {
             style={{ width: 36 }}
           />
         )}
+      </Pressable>
+      <Pressable
+        onPress={() => router.push("/addClimb")}
+        style={{ marginLeft: 10 }}
+      >
+        <AntDesign
+          name="plussquareo"
+          size={36}
+          color={theme.text}
+          selectable={undefined}
+          style={{ width: 36 }}
+        />
       </Pressable>
       <View style={{ height: 500 }}>
         <Text style={styles.heading}>Current Projects</Text>

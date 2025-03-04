@@ -8,7 +8,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 
 import { ThemeContext } from "@/context/ThemeContext";
 
-export default function ViewClimbScreen() {
+export default function EditClimbScreen() {
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext); // styles
   const styles = createStyles(theme, colorScheme);
   const { id } = useLocalSearchParams();
@@ -57,6 +57,28 @@ export default function ViewClimbScreen() {
     }
   };
 
+  const removeClimb = async () => {
+    // delete
+    try {
+      const currClimb = { ...climb };
+      const jsonValue = await AsyncStorage.getItem("ClimbApp");
+      const storageClimbs = jsonValue !== null ? JSON.parse(jsonValue) : null;
+
+      if (storageClimbs && storageClimbs.length) {
+        const otherClimbs = storageClimbs.filter(
+          (climb) => climb.id !== currClimb.id
+        );
+        await AsyncStorage.setItem("ClimbApp", JSON.stringify(otherClimbs));
+      } else {
+        await AsyncStorage.setItem("ClimbApp", JSON.stringify([savedClimb]));
+      }
+
+      router.push("/");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Pressable
@@ -100,10 +122,18 @@ export default function ViewClimbScreen() {
         </Pressable>
         <Pressable
           onPress={() => router.push(`/climbs/${id}`)}
-          style={[styles.saveButton, { backgroundColor: "red" }]}
+          style={[styles.saveButton, { backgroundColor: "green" }]}
         >
           <Text style={[styles.saveButtonText, { color: "white" }]}>
             Cancel
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={removeClimb}
+          style={[styles.saveButton, { backgroundColor: "red" }]}
+        >
+          <Text style={[styles.saveButtonText, { color: "white" }]}>
+            Delete
           </Text>
         </Pressable>
       </View>
