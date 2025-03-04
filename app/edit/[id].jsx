@@ -35,8 +35,26 @@ export default function ViewClimbScreen() {
     fetchData(id);
   }, [id]);
 
-  const handlePress = (id) => {
-    router.push(`/edit/${id}`);
+  const handleSave = async () => {
+    try {
+      const savedClimb = { ...climb, title: climb.title };
+      const jsonValue = await AsyncStorage.getItem("ClimbApp");
+      const storageClimbs = jsonValue !== null ? JSON.parse(jsonValue) : null;
+
+      if (storageClimbs && storageClimbs.length) {
+        const otherClimbs = storageClimbs.filter(
+          (climb) => climb.id !== savedClimb.id
+        );
+        const allClimbs = [...otherClimbs, savedClimb];
+        await AsyncStorage.setItem("ClimbApp", JSON.stringify(allClimbs));
+      } else {
+        await AsyncStorage.setItem("ClimbApp", JSON.stringify([savedClimb]));
+      }
+
+      router.push(`/climbs/${id}`);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -65,28 +83,27 @@ export default function ViewClimbScreen() {
           />
         )}
       </Pressable>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>{climb.title}</Text>
-        <Text style={styles.text}>{climb.grade}</Text>
-        <Text style={styles.text}>{climb.date}</Text>
-        <Text style={styles.text}>{climb.color}</Text>
-        <Text style={styles.text}>{climb.rating}</Text>
-        <Text style={styles.text}>{climb.completed}</Text>
-        <Text style={styles.text}>{climb.tags}</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Edit Title"
+          placeholderTextColor="grey"
+          value={climb?.title || ""}
+          onChangeText={(text) =>
+            setClimb((prev) => ({ ...prev, title: text }))
+          }
+        />
       </View>
-      <View style={styles.textContainer}>
-        <Pressable
-          onPress={() => handlePress(climb.id)}
-          style={styles.saveButton}
-        >
-          <Text styles={styles.saveButtonText}>Edit</Text>
+      <View style={styles.inputContainer}>
+        <Pressable onPress={handleSave} style={styles.saveButton}>
+          <Text styles={styles.saveButtonText}>Save</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.push("/")}
+          onPress={() => router.push(`/climbs/${id}`)}
           style={[styles.saveButton, { backgroundColor: "red" }]}
         >
           <Text styles={[styles.saveButtonText, { color: "white" }]}>
-            Return
+            Cancel
           </Text>
         </Pressable>
       </View>
@@ -102,7 +119,7 @@ function createStyles(theme, colorScheme) {
       width: "100%",
       backgroundColor: theme.background,
     },
-    textContainer: {
+    inputContainer: {
       flexDirection: "row",
       alignItems: "center",
       padding: 10,
@@ -112,7 +129,15 @@ function createStyles(theme, colorScheme) {
       marginHorizontal: "auto",
       pointerEvents: "auto",
     },
-    text: {
+    input: {
+      flex: 1,
+      borderColor: "grey",
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      marginRight: 10,
+      fontSize: 18,
+      minWidth: 0,
       color: theme.text,
     },
     saveButton: {

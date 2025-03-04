@@ -16,16 +16,51 @@ import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import Octicons from "@expo/vector-icons/Octicons";
 
-import { Colors } from "@/constants/Colors";
+//import { Colors } from "@/constants/Colors";
 import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/ClimbItems";
 import ClimbImages from "@/data/ClimbImages";
 
 export default function Index() {
   const Container = Platform.OS === "web" ? ScrollView : SafeAreaView;
-  const { colorScheme, setColorScheme, theme } = useContext(ThemeContext);
+  const { colorScheme, setColorScheme, theme } = useContext(ThemeContext); // styles
+  const styles = createStyles(theme, colorScheme);
 
-  const [climbs, setClimbs] = useState(data.sort((a, b) => b.id - a.id));
+  const [climbs, setClimbs] = useState([]);
+
+  useEffect(() => {
+    // load our data (user or default)
+    const fetchData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("ClimbApp");
+        const storageClimbs = jsonValue !== null ? JSON.parse(jsonValue) : null;
+
+        if (storageClimbs && storageClimbs.length) {
+          setClimbs(storageClimbs.sort((a, b) => b.id - a.id)); // use user data
+        } else {
+          setClimbs(data.sort((a, b) => b.id - a.id)); // use default data
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, [data]);
+
+  useEffect(() => {
+    // watches for changes in the climbs state
+    const storeData = async () => {
+      try {
+        const jsonValue = JSON.stringify(climbs);
+        await AsyncStorage.setItem("ClimbApp", jsonValue);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    storeData();
+  }, [climbs]);
+
   const completed = [];
   const projected = [];
   for (let i = 0; i < climbs.length; i++) {
@@ -35,13 +70,14 @@ export default function Index() {
       projected.push(climbs[i]);
     }
   }
-  const [text, setText] = useState("");
-  const router = useRouter();
 
+  const [text, setText] = useState("");
+
+  const router = useRouter(); // dynamic routing
   const handlePress = (id) => {
     router.push(`/climbs/${id}`);
   };
-  const styles = createStyles(theme, colorScheme);
+
   const renderItem = (
     { item } // Read
   ) => (
@@ -106,6 +142,7 @@ export default function Index() {
         />
       </View>
       {separatorComp}
+      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
     </Container>
   );
 }
