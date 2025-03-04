@@ -115,6 +115,40 @@ export default function EditClimbScreen() {
             setClimb((prev) => ({ ...prev, title: text }))
           }
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Edit Grade"
+          placeholderTextColor="grey"
+          value={climb?.grade || ""}
+          onChangeText={(text) =>
+            setClimb((prev) => ({ ...prev, grade: text }))
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Edit Date"
+          placeholderTextColor="grey"
+          value={climb?.date || ""}
+          onChangeText={(text) => setClimb((prev) => ({ ...prev, date: text }))}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Edit Hold Color"
+          placeholderTextColor="grey"
+          value={climb?.color || ""}
+          onChangeText={(text) =>
+            setClimb((prev) => ({ ...prev, color: text }))
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Edit Rating"
+          placeholderTextColor="grey"
+          value={climb?.rating || ""}
+          onChangeText={(text) =>
+            setClimb((prev) => ({ ...prev, rating: text }))
+          }
+        />
       </View>
       <View style={styles.inputContainer}>
         <Pressable onPress={handleSave} style={styles.saveButton}>
