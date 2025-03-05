@@ -1,10 +1,13 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
 import { useState, useEffect, useContext } from "react";
+//import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Octicons from "@expo/vector-icons/Octicons";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+//import RNBounceable from "@freakycoder/react-native-bounceable";
 
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -13,6 +16,7 @@ export default function EditClimbScreen() {
   const styles = createStyles(theme, colorScheme);
   const { id } = useLocalSearchParams();
   const [climb, setClimb] = useState({}); // climb state
+  //const [checkboxState, setCheckboxState] = useState();
   const router = useRouter();
 
   useEffect(() => {
@@ -149,8 +153,21 @@ export default function EditClimbScreen() {
             setClimb((prev) => ({ ...prev, rating: text }))
           }
         />
+        <BouncyCheckbox
+          //ref={bouncyCheckboxRef}
+          disableText
+          fillColor="#9342f5"
+          size={50}
+          iconImageStyle={styles.iconImageStyle}
+          iconStyle={{ borderColor: "#9342f5" }}
+          text="Completed"
+          isChecked={climb.completed}
+          onPress={(boolean) => {
+            setClimb((prev) => ({ ...prev, completed: boolean }));
+          }}
+        />
       </View>
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, { flexDirection: "row" }]}>
         <Pressable onPress={handleSave} style={styles.saveButton}>
           <Text style={styles.saveButtonText}>Save</Text>
         </Pressable>
@@ -184,7 +201,7 @@ function createStyles(theme, colorScheme) {
       backgroundColor: theme.background,
     },
     inputContainer: {
-      flexDirection: "row",
+      flexDirection: "column",
       alignItems: "center",
       padding: 10,
       gap: 6,
@@ -199,9 +216,9 @@ function createStyles(theme, colorScheme) {
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
-      marginRight: 10,
+      marginHorizontal: "auto",
       fontSize: 18,
-      minWidth: 0,
+      minWidth: "100%",
       color: theme.text,
     },
     saveButton: {

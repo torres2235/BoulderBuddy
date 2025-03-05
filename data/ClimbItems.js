@@ -27,6 +27,6 @@ export const data = [
     date: "2/3/2025",
     rating: 3.5,
     completed: false,
-    tags: ["dyno"],
+    tags: ["dyno", "slab", "crimp", "campus"],
   },
 ];

@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import { data } from "@/data/ClimbItems";
 import { ThemeContext } from "@/context/ThemeContext";
@@ -11,11 +12,21 @@ import { ThemeContext } from "@/context/ThemeContext";
 export default function AddClimb() {
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext); // styles
   const styles = createStyles(theme, colorScheme);
+  //const [checkboxState, setCheckboxState] = useState();
 
-  const { id } = useLocalSearchParams();
+  //const { id } = useLocalSearchParams();
   const [climbs, setClimbs] = useState([]);
   const router = useRouter();
-  const [text, setText] = useState("");
+  const [attributes, setAttribute] = useState({
+    id: null,
+    title: "",
+    grade: "",
+    color: "",
+    date: "",
+    rating: null,
+    completed: false,
+    tags: [],
+  });
 
   useEffect(() => {
     // load our data (user or default)
@@ -52,11 +63,19 @@ export default function AddClimb() {
 
   const addClimb = () => {
     // Create
-    if (text.trim()) {
-      const newId = climbs.length > 0 ? climbs[0].id + 1 : 1;
-      setClimbs([{ id: newId, title: text, completed: false }, ...climbs]);
-      setText("");
-    }
+    const newId = climbs.length > 0 ? climbs[0].id + 1 : 1;
+    attributes.id = newId;
+    setClimbs([attributes, ...climbs]);
+    setAttribute({
+      id: null,
+      title: "",
+      grade: "",
+      color: "",
+      date: "",
+      rating: 0,
+      completed: false,
+      tags: [],
+    });
 
     router.push(`/`);
   };
@@ -90,8 +109,51 @@ export default function AddClimb() {
           style={styles.input}
           placeholder="Add Title"
           placeholderTextColor="grey"
-          value={text}
-          onChangeText={setText}
+          //value={text}
+          onChangeText={(value) =>
+            setAttribute({ ...attributes, title: value })
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Add Grade"
+          placeholderTextColor="grey"
+          onChangeText={(value) =>
+            setAttribute({ ...attributes, grade: value })
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Add Date"
+          placeholderTextColor="grey"
+          onChangeText={(value) => setAttribute({ ...attributes, date: value })}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Add Hold Color"
+          placeholderTextColor="grey"
+          onChangeText={(value) =>
+            setAttribute({ ...attributes, color: value })
+          }
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Add Rating"
+          placeholderTextColor="grey"
+          onChangeText={(value) =>
+            setAttribute({ ...attributes, rating: value })
+          }
+        />
+        <BouncyCheckbox
+          disableText
+          fillColor="#9342f5"
+          size={50}
+          iconImageStyle={styles.iconImageStyle}
+          iconStyle={{ borderColor: "#9342f5" }}
+          text="Completed"
+          //   onPress={(boolean) => {
+          //     setClimb((prev) => ({ ...prev, completed: boolean }));
+          //   }}
         />
       </View>
       <View style={styles.inputContainer}>
