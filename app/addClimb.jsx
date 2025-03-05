@@ -151,9 +151,9 @@ export default function AddClimb() {
           iconImageStyle={styles.iconImageStyle}
           iconStyle={{ borderColor: "#9342f5" }}
           text="Completed"
-          //   onPress={(boolean) => {
-          //     setClimb((prev) => ({ ...prev, completed: boolean }));
-          //   }}
+          onPress={(boolean) => {
+            setAttribute({ ...attributes, completed: boolean });
+          }}
         />
       </View>
       <View style={styles.inputContainer}>
