@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import Octicons from "@expo/vector-icons/Octicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
@@ -103,7 +104,31 @@ export default function AddClimb() {
   //   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <Pressable
+        onPress={() =>
+          setColorScheme(colorScheme === "light" ? "dark" : "light")
+        }
+        style={{ marginLeft: 10 }}
+      >
+        {colorScheme === "dark" ? (
+          <Octicons
+            name="moon"
+            size={36}
+            color={theme.text}
+            selectable={undefined}
+            style={{ width: 36 }}
+          />
+        ) : (
+          <Octicons
+            name="sun"
+            size={36}
+            color={theme.text}
+            selectable={undefined}
+            style={{ width: 36 }}
+          />
+        )}
+      </Pressable>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -182,7 +207,7 @@ function createStyles(theme, colorScheme) {
       backgroundColor: theme.background,
     },
     inputContainer: {
-      flexDirection: "row",
+      flexDirection: "column",
       alignItems: "center",
       padding: 10,
       gap: 6,
