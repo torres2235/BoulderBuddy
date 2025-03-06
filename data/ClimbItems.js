@@ -1,3 +1,7 @@
+import wall1 from "@/assets/images/climbs/wall1.jpg";
+import wall2 from "@/assets/images/climbs/wall2.jpg";
+import wall3 from "@/assets/images/climbs/wall3.jpg";
+
 export const data = [
   {
     id: 1,
@@ -8,6 +12,7 @@ export const data = [
     rating: 4,
     completed: true,
     tags: [],
+    image: wall1,
   },
   {
     id: 2,
@@ -18,6 +23,7 @@ export const data = [
     rating: 5,
     completed: true,
     tags: [],
+    image: wall2,
   },
   {
     id: 3,
@@ -28,5 +34,6 @@ export const data = [
     rating: 3.5,
     completed: false,
     tags: ["dyno", "slab", "crimp", "campus"],
+    image: wall3,
   },
 ];

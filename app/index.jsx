@@ -72,8 +72,6 @@ export default function Index() {
     }
   }
 
-  const [text, setText] = useState("");
-
   const router = useRouter(); // dynamic routing
   const handlePress = (id) => {
     router.push(`/climbs/${id}`);
@@ -84,7 +82,7 @@ export default function Index() {
   ) => (
     <View style={styles.climbItem}>
       <Pressable onPress={() => handlePress(item.id)} style={styles.image}>
-        <Image source={ClimbImages[item.id - 1]} style={styles.image} />
+        <Image source={item.image} style={styles.image} />
       </Pressable>
       <Text style={styles.climbTitle}>{item.title}</Text>
       <View style={styles.climbTextContainer}>
@@ -222,3 +220,14 @@ function createStyles(theme, colorScheme) {
     },
   });
 }
+
+const clearAppData = async () => {
+  try {
+    await AsyncStorage.clear();
+
+    console.log("App data cleared successfully!");
+  } catch (error) {
+    console.error("Error clearing app data:", error);
+  }
+};
+//clearAppData();
