@@ -13,6 +13,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 
 export default function EditClimbScreen() {
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext); // styles
+  const [text, setText] = useState("test");
   const styles = createStyles(theme, colorScheme);
   const { id } = useLocalSearchParams();
   const [climb, setClimb] = useState({}); // climb state
@@ -114,6 +115,7 @@ export default function EditClimbScreen() {
           style={styles.input}
           placeholder="Edit Title"
           placeholderTextColor="grey"
+          //onChangeText={onChangeText}
           value={climb?.title || ""}
           onChangeText={(text) =>
             setClimb((prev) => ({ ...prev, title: text }))
@@ -209,14 +211,15 @@ function createStyles(theme, colorScheme) {
       pointerEvents: "auto",
     },
     input: {
-      flex: 1,
+      //flex: 1,
       borderColor: "grey",
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
       marginHorizontal: "auto",
       minWidth: "60%",
-      fontSize: 24,
+      fontSize: 16,
+      lineHeight: 16,
       color: theme.text,
     },
     saveButton: {
