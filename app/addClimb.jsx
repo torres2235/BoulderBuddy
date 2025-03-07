@@ -134,7 +134,6 @@ export default function AddClimb() {
           style={styles.input}
           placeholder="Add Title"
           placeholderTextColor="grey"
-          //value={text}
           onChangeText={(value) =>
             setAttribute({ ...attributes, title: value })
           }
@@ -170,12 +169,12 @@ export default function AddClimb() {
           }
         />
         <BouncyCheckbox
-          disableText
           fillColor="#9342f5"
           size={50}
           iconImageStyle={styles.iconImageStyle}
           iconStyle={{ borderColor: "#9342f5" }}
-          text="Completed"
+          //textStyle={{ color: "#010101", fontWeight: "600" }}
+          text="Completed?"
           onPress={(boolean) => {
             setAttribute({ ...attributes, completed: boolean });
           }}
@@ -222,9 +221,9 @@ function createStyles(theme, colorScheme) {
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
-      marginRight: 10,
+      marginHorizontal: "auto",
       fontSize: 18,
-      minWidth: 0,
+      minWidth: "60%",
       color: theme.text,
     },
     saveButton: {

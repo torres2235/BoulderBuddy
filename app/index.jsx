@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Pressable,
   FlatList,
+  SectionList,
   Image,
   ScrollView,
   Appearance,
@@ -71,6 +72,10 @@ export default function Index() {
       projected.push(climbs[i]);
     }
   }
+  const sections = [
+    { title: "Projects", data: [{ list: projected }] },
+    { title: "Completed", data: [{ list: completed }] },
+  ];
 
   const router = useRouter(); // dynamic routing
   const handlePress = (id) => {
@@ -91,6 +96,16 @@ export default function Index() {
         <Text style={styles.climbText}>{item.date}</Text>
       </View>
     </View>
+  );
+
+  const renderSection = ({ item }) => (
+    <FlatList
+      data={item.list}
+      numColumns={2}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.title}
+      contentContainerStyle={styles.flatListContainer}
+    />
   );
 
   const separatorComp = <View style={styles.separator} />;
@@ -133,26 +148,18 @@ export default function Index() {
           style={{ width: 36 }}
         />
       </Pressable>
-      <View style={{ height: 500 }}>
-        <Text style={styles.heading}>Current Projects</Text>
-        <FlatList
-          data={projected}
-          renderItem={renderItem}
-          keyExtractor={(climb) => climb.id}
-          contentContainerStyle={styles.flatListContainer}
+
+      <View style={{ flex: 1, flexDirection: "column", height: 500 }}>
+        <SectionList
+          sections={sections}
+          renderItem={renderSection}
+          renderSectionHeader={({ section }) => (
+            <Text style={styles.heading}>{section.title}</Text>
+          )}
         />
+        {separatorComp}
       </View>
-      {separatorComp}
-      <View style={{ height: 500 }}>
-        <Text style={styles.heading}>Completed</Text>
-        <FlatList
-          data={completed}
-          renderItem={renderItem}
-          keyExtractor={(climb) => climb.id}
-          contentContainerStyle={styles.flatListContainer}
-        />
-      </View>
-      {separatorComp}
+
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
     </Container>
   );
@@ -166,7 +173,7 @@ function createStyles(theme, colorScheme) {
     },
     flatListContainer: {
       flex: 1,
-      flexDirection: "row",
+      flexDirection: "column",
       flexWrap: "wrap",
       justifyContent: Platform.OS === "web" ? "flex-start" : "space-evenly",
     },

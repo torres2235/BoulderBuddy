@@ -154,13 +154,11 @@ export default function EditClimbScreen() {
           }
         />
         <BouncyCheckbox
-          //ref={bouncyCheckboxRef}
-          disableText
           fillColor="#9342f5"
           size={50}
           iconImageStyle={styles.iconImageStyle}
           iconStyle={{ borderColor: "#9342f5" }}
-          text="Completed"
+          text="Completed?"
           isChecked={climb.completed}
           onPress={(boolean) => {
             setClimb((prev) => ({ ...prev, completed: boolean }));
@@ -217,8 +215,8 @@ function createStyles(theme, colorScheme) {
       borderRadius: 5,
       padding: 10,
       marginHorizontal: "auto",
-      fontSize: 18,
-      minWidth: "100%",
+      minWidth: "60%",
+      fontSize: 24,
       color: theme.text,
     },
     saveButton: {
