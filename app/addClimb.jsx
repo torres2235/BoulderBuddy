@@ -7,6 +7,8 @@ import Octicons from "@expo/vector-icons/Octicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
+import SelectDropdown from 'react-native-select-dropdown'
+
 import { data } from "@/data/ClimbItems";
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -28,6 +30,46 @@ export default function AddClimb() {
     completed: false,
     tags: [],
   });
+
+  const grades = [
+    'v0',
+    'v1',
+    'v2',
+    'v3',
+    'v4',
+    'v5',
+    'v6',
+    'v7',
+    'v8',
+    'v9',
+    'v10',
+    'v11',
+    'v12',
+  ];
+
+  const color = [
+    'Red',
+    'Orange',
+    'Yellow',
+    'Green',
+    'Blue',
+    'Purple',
+    'Pink',
+    'Black',
+  ];
+
+  const rating = [
+    0,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    3.5,
+    4,
+    4.5,
+    5
+  ];
 
   useEffect(() => {
     // load our data (user or default)
@@ -138,36 +180,85 @@ export default function AddClimb() {
             setAttribute({ ...attributes, title: value })
           }
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Add Grade"
-          placeholderTextColor="grey"
-          onChangeText={(value) =>
-            setAttribute({ ...attributes, grade: value })
-          }
-        />
+        <SelectDropdown
+                  data={grades}
+                  onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, grade: selectedItem }))}
+                  // defaultValueByIndex={8} // use default value by index or default value
+                  // defaultValue={'kiss'} // use default value by index or default value
+                  renderButton={(selectedItem, isOpen) => {
+                    return (
+                      <View style={styles.input}>
+                        <Text style={styles.text}>{selectedItem || "Select the Grade"}</Text>
+                      </View>
+                    );
+                  }}
+                  renderItem={(item, index, isSelected) => {
+                    return (
+                      <View
+                        style={{
+                          ...styles.dropdownItemStyle,
+                          ...(isSelected && {backgroundColor: '#D2D9DF'}),
+                        }}>
+                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                      </View>
+                    );
+                  }}
+                    dropdownStyle={styles.dropdownMenuStyle}
+                />
         <TextInput
           style={styles.input}
           placeholder="Add Date"
           placeholderTextColor="grey"
           onChangeText={(value) => setAttribute({ ...attributes, date: value })}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Add Hold Color"
-          placeholderTextColor="grey"
-          onChangeText={(value) =>
-            setAttribute({ ...attributes, color: value })
-          }
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Add Rating"
-          placeholderTextColor="grey"
-          onChangeText={(value) =>
-            setAttribute({ ...attributes, rating: value })
-          }
-        />
+        <SelectDropdown
+                  data={color}
+                  onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, color: selectedItem }))}
+                  renderButton={(selectedItem, isOpen) => {
+                    return (
+                      <View style={styles.input}>
+                        <Text style={styles.text}>{selectedItem || "Select the hold color"}</Text>
+                      </View>
+                    );
+                  }}
+                  renderItem={(item, index, isSelected) => {
+                    return (
+                      <View
+                        style={{
+                          ...styles.dropdownItemStyle,
+                          ...(isSelected && {backgroundColor: '#D2D9DF'}),
+                        }}>
+                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                      </View>
+                    );
+                  }}
+                    dropdownStyle={styles.dropdownMenuStyle}
+                />
+        <SelectDropdown
+                  data={rating}
+                  onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, rating: selectedItem }))}
+                  // defaultValueByIndex={8} // use default value by index or default value
+                  // defaultValue={'kiss'} // use default value by index or default value
+                  renderButton={(selectedItem, isOpen) => {
+                    return (
+                      <View style={styles.input}>
+                        <Text style={styles.text}>{selectedItem || "Rating"}</Text>
+                      </View>
+                    );
+                  }}
+                  renderItem={(item, index, isSelected) => {
+                    return (
+                      <View
+                        style={{
+                          ...styles.dropdownItemStyle,
+                          ...(isSelected && {backgroundColor: '#D2D9DF'}),
+                        }}>
+                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                      </View>
+                    );
+                  }}
+                    dropdownStyle={styles.dropdownMenuStyle}
+                />
         <BouncyCheckbox
           fillColor="#9342f5"
           size={50}
@@ -234,6 +325,9 @@ function createStyles(theme, colorScheme) {
     saveButtonText: {
       fontSize: 18,
       color: colorScheme === "dark" ? "black" : "white",
+    },
+    text: {
+      color: theme.text,
     },
   });
 }

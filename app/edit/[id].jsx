@@ -7,7 +7,8 @@ import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Octicons from "@expo/vector-icons/Octicons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-//import RNBounceable from "@freakycoder/react-native-bounceable";
+
+import SelectDropdown from 'react-native-select-dropdown'
 
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -19,6 +20,46 @@ export default function EditClimbScreen() {
   const [climb, setClimb] = useState({}); // climb state
   //const [checkboxState, setCheckboxState] = useState();
   const router = useRouter();
+
+  const grades = [
+    'v0',
+    'v1',
+    'v2',
+    'v3',
+    'v4',
+    'v5',
+    'v6',
+    'v7',
+    'v8',
+    'v9',
+    'v10',
+    'v11',
+    'v12',
+  ];
+
+  const color = [
+    'Red',
+    'Orange',
+    'Yellow',
+    'Green',
+    'Blue',
+    'Purple',
+    'Pink',
+    'Black',
+  ];
+
+  const rating = [
+    0,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    3.5,
+    4,
+    4.5,
+    5
+  ];
 
   useEffect(() => {
     const fetchData = async (id) => {
@@ -115,21 +156,39 @@ export default function EditClimbScreen() {
           style={styles.input}
           placeholder="Edit Title"
           placeholderTextColor="grey"
-          //onChangeText={onChangeText}
           value={climb?.title || ""}
           onChangeText={(text) =>
             setClimb((prev) => ({ ...prev, title: text }))
           }
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Edit Grade"
-          placeholderTextColor="grey"
-          value={climb?.grade || ""}
-          onChangeText={(text) =>
-            setClimb((prev) => ({ ...prev, grade: text }))
-          }
+
+        <SelectDropdown
+          data={grades}
+          onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, grade: selectedItem }))}
+          // defaultValueByIndex={8} // use default value by index or default value
+          // defaultValue={'kiss'} // use default value by index or default value
+          renderButton={(selectedItem, isOpen) => {
+            return (
+              <View style={styles.input}>
+                <Text style={styles.text}>{selectedItem || climb.grade}</Text>
+              </View>
+            );
+          }}
+          renderItem={(item, index, isSelected) => {
+            return (
+              <View
+                style={{
+                  ...styles.dropdownItemStyle,
+                  ...(isSelected && {backgroundColor: '#D2D9DF'}),
+                }}>
+                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+              </View>
+            );
+          }}
+            dropdownStyle={styles.dropdownMenuStyle}
         />
+
+
         <TextInput
           style={styles.input}
           placeholder="Edit Date"
@@ -137,23 +196,54 @@ export default function EditClimbScreen() {
           value={climb?.date || ""}
           onChangeText={(text) => setClimb((prev) => ({ ...prev, date: text }))}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Edit Hold Color"
-          placeholderTextColor="grey"
-          value={climb?.color || ""}
-          onChangeText={(text) =>
-            setClimb((prev) => ({ ...prev, color: text }))
-          }
+
+       <SelectDropdown
+          data={color}
+          onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, color: selectedItem }))}
+          renderButton={(selectedItem, isOpen) => {
+            return (
+              <View style={styles.input}>
+                <Text style={styles.text}>{selectedItem || climb.color}</Text>
+              </View>
+            );
+          }}
+          renderItem={(item, index, isSelected) => {
+            return (
+              <View
+                style={{
+                  ...styles.dropdownItemStyle,
+                  ...(isSelected && {backgroundColor: '#D2D9DF'}),
+                }}>
+                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+              </View>
+            );
+          }}
+            dropdownStyle={styles.dropdownMenuStyle}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Edit Rating"
-          placeholderTextColor="grey"
-          value={climb?.rating || ""}
-          onChangeText={(text) =>
-            setClimb((prev) => ({ ...prev, rating: text }))
-          }
+        <SelectDropdown
+          data={rating}
+          onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, rating: selectedItem }))}
+          // defaultValueByIndex={8} // use default value by index or default value
+          // defaultValue={'kiss'} // use default value by index or default value
+          renderButton={(selectedItem, isOpen) => {
+            return (
+              <View style={styles.input}>
+                <Text style={styles.text}>{selectedItem || climb.rating}</Text>
+              </View>
+            );
+          }}
+          renderItem={(item, index, isSelected) => {
+            return (
+              <View
+                style={{
+                  ...styles.dropdownItemStyle,
+                  ...(isSelected && {backgroundColor: '#D2D9DF'}),
+                }}>
+                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+              </View>
+            );
+          }}
+            dropdownStyle={styles.dropdownMenuStyle}
         />
         <BouncyCheckbox
           fillColor="#9342f5"
@@ -230,6 +320,9 @@ function createStyles(theme, colorScheme) {
     saveButtonText: {
       fontSize: 18,
       color: colorScheme === "dark" ? "black" : "white",
+    },
+    text: {
+      color: theme.text,
     },
   });
 }
