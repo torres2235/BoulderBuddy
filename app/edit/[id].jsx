@@ -1,5 +1,12 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  Button,
+} from "react-native";
 import { useState, useEffect, useContext } from "react";
 //import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,8 +14,9 @@ import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Octicons from "@expo/vector-icons/Octicons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import SelectDropdown from "react-native-select-dropdown";
 
-import SelectDropdown from 'react-native-select-dropdown'
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -19,47 +27,47 @@ export default function EditClimbScreen() {
   const { id } = useLocalSearchParams();
   const [climb, setClimb] = useState({}); // climb state
   //const [checkboxState, setCheckboxState] = useState();
+
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const onDateChange = (e, selectedDate) => {
+    setDate(selectedDate);
+    setShow(false);
+  };
+  const showMode = (modeToShow) => {
+    setShow(true);
+    setMode(modeToShow);
+  };
   const router = useRouter();
 
   const grades = [
-    'v0',
-    'v1',
-    'v2',
-    'v3',
-    'v4',
-    'v5',
-    'v6',
-    'v7',
-    'v8',
-    'v9',
-    'v10',
-    'v11',
-    'v12',
+    "v0",
+    "v1",
+    "v2",
+    "v3",
+    "v4",
+    "v5",
+    "v6",
+    "v7",
+    "v8",
+    "v9",
+    "v10",
+    "v11",
+    "v12",
   ];
 
   const color = [
-    'Red',
-    'Orange',
-    'Yellow',
-    'Green',
-    'Blue',
-    'Purple',
-    'Pink',
-    'Black',
+    "Red",
+    "Orange",
+    "Yellow",
+    "Green",
+    "Blue",
+    "Purple",
+    "Pink",
+    "Black",
   ];
 
-  const rating = [
-    0,
-    1,
-    1.5,
-    2,
-    2.5,
-    3,
-    3.5,
-    4,
-    4.5,
-    5
-  ];
+  const rating = [0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
   useEffect(() => {
     const fetchData = async (id) => {
@@ -164,7 +172,9 @@ export default function EditClimbScreen() {
 
         <SelectDropdown
           data={grades}
-          onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, grade: selectedItem }))}
+          onSelect={(selectedItem) =>
+            setClimb((prev) => ({ ...prev, grade: selectedItem }))
+          }
           // defaultValueByIndex={8} // use default value by index or default value
           // defaultValue={'kiss'} // use default value by index or default value
           renderButton={(selectedItem, isOpen) => {
@@ -179,15 +189,15 @@ export default function EditClimbScreen() {
               <View
                 style={{
                   ...styles.dropdownItemStyle,
-                  ...(isSelected && {backgroundColor: '#D2D9DF'}),
-                }}>
+                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                }}
+              >
                 <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
               </View>
             );
           }}
-            dropdownStyle={styles.dropdownMenuStyle}
+          dropdownStyle={styles.dropdownMenuStyle}
         />
-
 
         <TextInput
           style={styles.input}
@@ -197,9 +207,11 @@ export default function EditClimbScreen() {
           onChangeText={(text) => setClimb((prev) => ({ ...prev, date: text }))}
         />
 
-       <SelectDropdown
+        <SelectDropdown
           data={color}
-          onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, color: selectedItem }))}
+          onSelect={(selectedItem) =>
+            setClimb((prev) => ({ ...prev, color: selectedItem }))
+          }
           renderButton={(selectedItem, isOpen) => {
             return (
               <View style={styles.input}>
@@ -212,17 +224,20 @@ export default function EditClimbScreen() {
               <View
                 style={{
                   ...styles.dropdownItemStyle,
-                  ...(isSelected && {backgroundColor: '#D2D9DF'}),
-                }}>
+                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                }}
+              >
                 <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
               </View>
             );
           }}
-            dropdownStyle={styles.dropdownMenuStyle}
+          dropdownStyle={styles.dropdownMenuStyle}
         />
         <SelectDropdown
           data={rating}
-          onSelect={(selectedItem) => setClimb((prev) => ({ ...prev, rating: selectedItem }))}
+          onSelect={(selectedItem) =>
+            setClimb((prev) => ({ ...prev, rating: selectedItem }))
+          }
           // defaultValueByIndex={8} // use default value by index or default value
           // defaultValue={'kiss'} // use default value by index or default value
           renderButton={(selectedItem, isOpen) => {
@@ -237,13 +252,14 @@ export default function EditClimbScreen() {
               <View
                 style={{
                   ...styles.dropdownItemStyle,
-                  ...(isSelected && {backgroundColor: '#D2D9DF'}),
-                }}>
+                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                }}
+              >
                 <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
               </View>
             );
           }}
-            dropdownStyle={styles.dropdownMenuStyle}
+          dropdownStyle={styles.dropdownMenuStyle}
         />
         <BouncyCheckbox
           fillColor="#9342f5"
@@ -255,6 +271,13 @@ export default function EditClimbScreen() {
           onPress={(boolean) => {
             setClimb((prev) => ({ ...prev, completed: boolean }));
           }}
+        />
+
+        <DateTimePicker
+          value={date}
+          mode={"date"}
+          is24Hour={true}
+          onChange={onDateChange}
         />
       </View>
       <View style={[styles.inputContainer, { flexDirection: "row" }]}>
