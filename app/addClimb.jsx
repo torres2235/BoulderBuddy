@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import SelectDropdown from "react-native-select-dropdown";
 
+import DateTimePicker from "@react-native-community/datetimepicker";
+
 import { data } from "@/data/ClimbItems";
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -18,6 +20,18 @@ export default function AddClimb() {
 
   //const { id } = useLocalSearchParams();
   const [climbs, setClimbs] = useState([]);
+
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const onDateChange = (e, selectedDate) => {
+    setDate(selectedDate);
+    setShow(false);
+    setAttribute((prev) => ({
+      ...prev,
+      date:
+        date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear(),
+    }));
+  };
   const router = useRouter();
   const [attributes, setAttribute] = useState({
     id: null,
@@ -149,7 +163,7 @@ export default function AddClimb() {
         <SelectDropdown
           data={grades}
           onSelect={(selectedItem) =>
-            setClimb((prev) => ({ ...prev, grade: selectedItem }))
+            setAttribute((prev) => ({ ...prev, grade: selectedItem }))
           }
           // defaultValueByIndex={8} // use default value by index or default value
           // defaultValue={'kiss'} // use default value by index or default value
@@ -176,16 +190,16 @@ export default function AddClimb() {
           }}
           dropdownStyle={styles.dropdownMenuStyle}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Add Date"
-          placeholderTextColor="grey"
-          onChangeText={(value) => setAttribute({ ...attributes, date: value })}
+        <DateTimePicker
+          value={date}
+          mode={"date"}
+          //is24Hour={true}
+          onChange={onDateChange}
         />
         <SelectDropdown
           data={color}
           onSelect={(selectedItem) =>
-            setClimb((prev) => ({ ...prev, color: selectedItem }))
+            setAttribute((prev) => ({ ...prev, color: selectedItem }))
           }
           renderButton={(selectedItem, isOpen) => {
             return (
@@ -213,7 +227,7 @@ export default function AddClimb() {
         <SelectDropdown
           data={rating}
           onSelect={(selectedItem) =>
-            setClimb((prev) => ({ ...prev, rating: selectedItem }))
+            setAttribute((prev) => ({ ...prev, rating: selectedItem }))
           }
           // defaultValueByIndex={8} // use default value by index or default value
           // defaultValue={'kiss'} // use default value by index or default value

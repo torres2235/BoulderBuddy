@@ -33,6 +33,11 @@ export default function EditClimbScreen() {
   const onDateChange = (e, selectedDate) => {
     setDate(selectedDate);
     setShow(false);
+    setClimb((prev) => ({
+      ...prev,
+      date:
+        date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear(),
+    }));
   };
   const showMode = (modeToShow) => {
     setShow(true);
@@ -199,12 +204,11 @@ export default function EditClimbScreen() {
           dropdownStyle={styles.dropdownMenuStyle}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Edit Date"
-          placeholderTextColor="grey"
-          value={climb?.date || ""}
-          onChangeText={(text) => setClimb((prev) => ({ ...prev, date: text }))}
+        <DateTimePicker
+          value={date}
+          mode={"date"}
+          //is24Hour={true}
+          onChange={onDateChange}
         />
 
         <SelectDropdown
@@ -271,13 +275,6 @@ export default function EditClimbScreen() {
           onPress={(boolean) => {
             setClimb((prev) => ({ ...prev, completed: boolean }));
           }}
-        />
-
-        <DateTimePicker
-          value={date}
-          mode={"date"}
-          is24Hour={true}
-          onChange={onDateChange}
         />
       </View>
       <View style={[styles.inputContainer, { flexDirection: "row" }]}>
