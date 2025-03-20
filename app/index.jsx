@@ -22,7 +22,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 //import { Colors } from "@/constants/Colors";
 import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/ClimbItems";
-import ClimbImages from "@/data/ClimbImages";
 
 export default function Index() {
   const Container = Platform.OS === "web" ? ScrollView : SafeAreaView;
@@ -155,23 +154,13 @@ export default function Index() {
       </View>
 
       <View style={styles.footer}>
-        <Pressable
-          onPress={() => router.push("/addClimb")}
-          style={
-            {
-              // flex: 1,
-              // flexDirection: "row",
-              // justifyContent: "center",
-              // alignItems: "center",
-            }
-          }
-        >
+        <Pressable onPress={() => router.push("/addClimb")}>
           <AntDesign
             name="plussquareo"
-            size={36}
+            size={50}
             color={theme.text}
             selectable={undefined}
-            style={{ width: 36 }}
+            style={{ width: 50 }}
           />
         </Pressable>
       </View>
@@ -184,9 +173,9 @@ export default function Index() {
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
     header: {
-      //flex: 1,
+      flexDirection: "row-reverse",
       position: "fixed",
-
+      backgroundColor: "black",
       top: 0,
     },
     container: {
@@ -249,10 +238,11 @@ function createStyles(theme, colorScheme) {
       borderTopRightRadius: 14,
     },
     footer: {
-      //flex: 1,
       position: "fixed",
-
+      justifyContent: "center",
+      alignItems: "center",
       bottom: 0,
+      backgroundColor: "black",
     },
   });
 }
