@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -65,6 +65,7 @@ export default function ViewClimbScreen() {
           />
         )}
       </Pressable>
+      <Image source={{ uri: climb.image }} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.text}>{climb.title}</Text>
         <Text style={styles.text}>{climb.grade}</Text>
@@ -96,6 +97,15 @@ function createStyles(theme, colorScheme) {
       flex: 1,
       width: "100%",
       backgroundColor: theme.background,
+    },
+    image: {
+      width: 300,
+      height: 300,
+      //flex: 1,
+      //resizeMode: "cover",
+      //justifyContent: "center",
+      borderColor: theme.text,
+      borderWidth: 1,
     },
     textContainer: {
       flexDirection: "row",

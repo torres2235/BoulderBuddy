@@ -53,3 +53,4 @@ Join our community of developers creating universal apps.
 
 - https://www.npmjs.com/package/react-native-ui-datepicker
 - https://www.npmjs.com/package/react-native-select-dropdown
+- https://docs.expo.dev/versions/latest/sdk/imagepicker/

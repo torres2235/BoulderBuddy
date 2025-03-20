@@ -5,7 +5,11 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
+  Image,
   Button,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 //import React from "react";
@@ -15,10 +19,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Octicons from "@expo/vector-icons/Octicons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import SelectDropdown from "react-native-select-dropdown";
+import * as ImagePicker from "expo-image-picker";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { ThemeContext } from "@/context/ThemeContext";
+
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 
 export default function EditClimbScreen() {
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext); // styles
@@ -94,6 +105,46 @@ export default function EditClimbScreen() {
     fetchData(id);
   }, [id]);
 
+  const uploadImage = async () => {
+    try {
+      await ImagePicker.requestCameraPermissionsAsync();
+      let result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.back,
+        allowEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        // save image
+        setClimb((prev) => ({ ...prev, image: result.assets[0].uri }));
+      }
+    } catch (e) {
+      console.error(e);
+      setModalVisible(false);
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: "images",
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        // save image
+        setClimb((prev) => ({ ...prev, image: result.assets[0].uri }));
+      }
+    } catch (e) {
+      console.error(e);
+      setModalVisible(false);
+    }
+  };
+
   const handleSave = async () => {
     try {
       const savedClimb = { ...climb, title: climb.title };
@@ -139,167 +190,185 @@ export default function EditClimbScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Pressable
-        onPress={() =>
-          setColorScheme(colorScheme === "light" ? "dark" : "light")
-        }
-        style={{ marginLeft: 10 }}
-      >
-        {colorScheme === "dark" ? (
-          <Octicons
-            name="moon"
-            size={36}
-            color={theme.text}
-            selectable={undefined}
-            style={{ width: 36 }}
-          />
-        ) : (
-          <Octicons
-            name="sun"
-            size={36}
-            color={theme.text}
-            selectable={undefined}
-            style={{ width: 36 }}
-          />
-        )}
-      </Pressable>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Edit Title"
-          placeholderTextColor="grey"
-          value={climb?.title || ""}
-          onChangeText={(text) =>
-            setClimb((prev) => ({ ...prev, title: text }))
-          }
-        />
-
-        <SelectDropdown
-          data={grades}
-          onSelect={(selectedItem) =>
-            setClimb((prev) => ({ ...prev, grade: selectedItem }))
-          }
-          // defaultValueByIndex={8} // use default value by index or default value
-          // defaultValue={'kiss'} // use default value by index or default value
-          renderButton={(selectedItem, isOpen) => {
-            return (
-              <View style={styles.input}>
-                <Text style={styles.text}>{selectedItem || climb.grade}</Text>
-              </View>
-            );
-          }}
-          renderItem={(item, index, isSelected) => {
-            return (
-              <View
-                style={{
-                  ...styles.dropdownItemStyle,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                }}
-              >
-                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-              </View>
-            );
-          }}
-          dropdownStyle={styles.dropdownMenuStyle}
-        />
-
-        <DateTimePicker
-          value={date}
-          mode={"date"}
-          //is24Hour={true}
-          onChange={onDateChange}
-        />
-
-        <SelectDropdown
-          data={color}
-          onSelect={(selectedItem) =>
-            setClimb((prev) => ({ ...prev, color: selectedItem }))
-          }
-          renderButton={(selectedItem, isOpen) => {
-            return (
-              <View style={styles.input}>
-                <Text style={styles.text}>{selectedItem || climb.color}</Text>
-              </View>
-            );
-          }}
-          renderItem={(item, index, isSelected) => {
-            return (
-              <View
-                style={{
-                  ...styles.dropdownItemStyle,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                }}
-              >
-                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-              </View>
-            );
-          }}
-          dropdownStyle={styles.dropdownMenuStyle}
-        />
-        <SelectDropdown
-          data={rating}
-          onSelect={(selectedItem) =>
-            setClimb((prev) => ({ ...prev, rating: selectedItem }))
-          }
-          // defaultValueByIndex={8} // use default value by index or default value
-          // defaultValue={'kiss'} // use default value by index or default value
-          renderButton={(selectedItem, isOpen) => {
-            return (
-              <View style={styles.input}>
-                <Text style={styles.text}>{selectedItem || climb.rating}</Text>
-              </View>
-            );
-          }}
-          renderItem={(item, index, isSelected) => {
-            return (
-              <View
-                style={{
-                  ...styles.dropdownItemStyle,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                }}
-              >
-                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-              </View>
-            );
-          }}
-          dropdownStyle={styles.dropdownMenuStyle}
-        />
-        <BouncyCheckbox
-          fillColor="#9342f5"
-          size={50}
-          iconImageStyle={styles.iconImageStyle}
-          iconStyle={{ borderColor: "#9342f5" }}
-          text="Completed?"
-          isChecked={climb.completed}
-          onPress={(boolean) => {
-            setClimb((prev) => ({ ...prev, completed: boolean }));
-          }}
-        />
-      </View>
-      <View style={[styles.inputContainer, { flexDirection: "row" }]}>
-        <Pressable onPress={handleSave} style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Save</Text>
-        </Pressable>
+    <DismissKeyboard>
+      <SafeAreaView style={styles.container}>
         <Pressable
-          onPress={() => router.push(`/climbs/${id}`)}
-          style={[styles.saveButton, { backgroundColor: "green" }]}
+          onPress={() =>
+            setColorScheme(colorScheme === "light" ? "dark" : "light")
+          }
+          style={{ marginLeft: 10 }}
         >
-          <Text style={[styles.saveButtonText, { color: "white" }]}>
-            Cancel
-          </Text>
+          {colorScheme === "dark" ? (
+            <Octicons
+              name="moon"
+              size={36}
+              color={theme.text}
+              selectable={undefined}
+              style={{ width: 36 }}
+            />
+          ) : (
+            <Octicons
+              name="sun"
+              size={36}
+              color={theme.text}
+              selectable={undefined}
+              style={{ width: 36 }}
+            />
+          )}
         </Pressable>
-        <Pressable
-          onPress={removeClimb}
-          style={[styles.saveButton, { backgroundColor: "red" }]}
+        <View style={styles.inputContainer}>
+          <TouchableOpacity onPress={() => pickImage()}>
+            <Image source={{ uri: climb.image }} style={styles.image} />
+          </TouchableOpacity>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Edit Title"
+            placeholderTextColor="grey"
+            value={climb?.title || ""}
+            onBlur={() => Keyboard.dismiss()}
+            onChangeText={(text) =>
+              setClimb((prev) => ({ ...prev, title: text }))
+            }
+          />
+
+          <SelectDropdown
+            data={grades}
+            onSelect={(selectedItem) =>
+              setClimb((prev) => ({ ...prev, grade: selectedItem }))
+            }
+            // defaultValueByIndex={8} // use default value by index or default value
+            // defaultValue={'kiss'} // use default value by index or default value
+            renderButton={(selectedItem, isOpen) => {
+              return (
+                <View style={styles.input}>
+                  <Text style={styles.text}>{selectedItem || climb.grade}</Text>
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+
+          <DateTimePicker
+            value={date}
+            mode={"date"}
+            //is24Hour={true}
+            onChange={onDateChange}
+          />
+
+          <SelectDropdown
+            data={color}
+            onSelect={(selectedItem) =>
+              setClimb((prev) => ({ ...prev, color: selectedItem }))
+            }
+            renderButton={(selectedItem, isOpen) => {
+              return (
+                <View style={styles.input}>
+                  <Text style={styles.text}>{selectedItem || climb.color}</Text>
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+          <SelectDropdown
+            data={rating}
+            onSelect={(selectedItem) =>
+              setClimb((prev) => ({ ...prev, rating: selectedItem }))
+            }
+            // defaultValueByIndex={8} // use default value by index or default value
+            // defaultValue={'kiss'} // use default value by index or default value
+            renderButton={(selectedItem, isOpen) => {
+              return (
+                <View style={styles.input}>
+                  <Text style={styles.text}>
+                    {selectedItem || climb.rating}
+                  </Text>
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+          <BouncyCheckbox
+            fillColor="#9342f5"
+            size={50}
+            iconImageStyle={styles.iconImageStyle}
+            iconStyle={{ borderColor: "#9342f5" }}
+            text="Completed?"
+            isChecked={climb.completed}
+            onPress={(boolean) => {
+              setClimb((prev) => ({ ...prev, completed: boolean }));
+            }}
+          />
+        </View>
+        <View
+          style={[
+            styles.inputContainer,
+            {
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            },
+          ]}
         >
-          <Text style={[styles.saveButtonText, { color: "white" }]}>
-            Delete
-          </Text>
-        </Pressable>
-      </View>
-      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-    </SafeAreaView>
+          <Pressable onPress={handleSave} style={styles.saveButton}>
+            <Text style={styles.saveButtonText}>Save</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push(`/climbs/${id}`)}
+            style={[styles.saveButton, { backgroundColor: "green" }]}
+          >
+            <Text style={[styles.saveButtonText, { color: "white" }]}>
+              Cancel
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={removeClimb}
+            style={[styles.saveButton, { backgroundColor: "red" }]}
+          >
+            <Text style={[styles.saveButtonText, { color: "white" }]}>
+              Delete
+            </Text>
+          </Pressable>
+        </View>
+        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+      </SafeAreaView>
+    </DismissKeyboard>
   );
 }
 
@@ -309,6 +378,15 @@ function createStyles(theme, colorScheme) {
       flex: 1,
       width: "100%",
       backgroundColor: theme.background,
+    },
+    image: {
+      width: 300,
+      height: 300,
+      //flex: 1,
+      //resizeMode: "cover",
+      //justifyContent: "center",
+      borderColor: theme.text,
+      borderWidth: 1,
     },
     inputContainer: {
       flexDirection: "column",

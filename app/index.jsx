@@ -9,6 +9,7 @@ import {
   ScrollView,
   Appearance,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useContext, useEffect } from "react";
@@ -86,9 +87,12 @@ export default function Index() {
     { item } // Read
   ) => (
     <View style={styles.climbItem}>
-      <Pressable onPress={() => handlePress(item.id)} style={styles.image}>
-        <Image source={item.image} style={styles.image} />
-      </Pressable>
+      <TouchableOpacity
+        onPress={() => handlePress(item.id)}
+        style={styles.image}
+      >
+        <Image source={{ uri: item.image }} style={styles.image} />
+      </TouchableOpacity>
       <Text style={styles.climbTitle}>{item.title}</Text>
       <View style={styles.climbTextContainer}>
         <Text style={styles.climbText}>{item.grade}</Text>
@@ -99,55 +103,46 @@ export default function Index() {
   );
 
   const renderSection = ({ item }) => (
-    <FlatList
-      data={item.list}
-      numColumns={2}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.title}
-      contentContainerStyle={styles.flatListContainer}
-    />
+    <View>
+      <FlatList
+        data={item.list}
+        numColumns={2}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.title}
+        contentContainerStyle={styles.flatListContainer}
+      />
+      <View style={styles.separator} />
+    </View>
   );
-
-  const separatorComp = <View style={styles.separator} />;
 
   return (
     <Container style={styles.container}>
-      <Pressable
-        onPress={() =>
-          setColorScheme(colorScheme === "light" ? "dark" : "light")
-        }
-        style={{ marginLeft: 10 }}
-      >
-        {colorScheme === "dark" ? (
-          <Octicons
-            name="moon"
-            size={36}
-            color={theme.text}
-            selectable={undefined}
-            style={{ width: 36 }}
-          />
-        ) : (
-          <Octicons
-            name="sun"
-            size={36}
-            color={theme.text}
-            selectable={undefined}
-            style={{ width: 36 }}
-          />
-        )}
-      </Pressable>
-      <Pressable
-        onPress={() => router.push("/addClimb")}
-        style={{ marginLeft: 10 }}
-      >
-        <AntDesign
-          name="plussquareo"
-          size={36}
-          color={theme.text}
-          selectable={undefined}
-          style={{ width: 36 }}
-        />
-      </Pressable>
+      <View style={styles.header}>
+        <Pressable
+          onPress={() =>
+            setColorScheme(colorScheme === "light" ? "dark" : "light")
+          }
+          style={{ marginLeft: 10 }}
+        >
+          {colorScheme === "dark" ? (
+            <Octicons
+              name="moon"
+              size={36}
+              color={theme.text}
+              selectable={undefined}
+              style={{ width: 36 }}
+            />
+          ) : (
+            <Octicons
+              name="sun"
+              size={36}
+              color={theme.text}
+              selectable={undefined}
+              style={{ width: 36 }}
+            />
+          )}
+        </Pressable>
+      </View>
 
       <View style={{ flex: 1, flexDirection: "column", height: 500 }}>
         <SectionList
@@ -157,7 +152,28 @@ export default function Index() {
             <Text style={styles.heading}>{section.title}</Text>
           )}
         />
-        {separatorComp}
+      </View>
+
+      <View style={styles.footer}>
+        <Pressable
+          onPress={() => router.push("/addClimb")}
+          style={
+            {
+              // flex: 1,
+              // flexDirection: "row",
+              // justifyContent: "center",
+              // alignItems: "center",
+            }
+          }
+        >
+          <AntDesign
+            name="plussquareo"
+            size={36}
+            color={theme.text}
+            selectable={undefined}
+            style={{ width: 36 }}
+          />
+        </Pressable>
       </View>
 
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
@@ -167,8 +183,15 @@ export default function Index() {
 
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
+    header: {
+      //flex: 1,
+      position: "fixed",
+
+      top: 0,
+    },
     container: {
       flex: 1,
+      height: "100%",
       backgroundColor: theme.background,
     },
     flatListContainer: {
@@ -188,7 +211,7 @@ function createStyles(theme, colorScheme) {
       width: "50%",
       maxWidth: 300,
       marginHorizontal: "auto",
-      marginBottom: 10,
+      margin: 15,
     },
     climbItem: {
       width: 200,
@@ -225,16 +248,22 @@ function createStyles(theme, colorScheme) {
       borderTopLeftRadius: 14,
       borderTopRightRadius: 14,
     },
+    footer: {
+      //flex: 1,
+      position: "fixed",
+
+      bottom: 0,
+    },
   });
 }
 
-const clearAppData = async () => {
-  try {
-    await AsyncStorage.clear();
+// const clearAppData = async () => {
+//   try {
+//     await AsyncStorage.clear();
 
-    console.log("App data cleared successfully!");
-  } catch (error) {
-    console.error("Error clearing app data:", error);
-  }
-};
-//clearAppData();
+//     console.log("App data cleared successfully!");
+//   } catch (error) {
+//     console.error("Error clearing app data:", error);
+//   }
+// };
+// clearAppData();
