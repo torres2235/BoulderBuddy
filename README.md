@@ -33,7 +33,15 @@ This command will move the starter code to the **app-example** directory and cre
 
 ## User Flow Diagram
 
+- https://www.figma.com/board/pnYUWR4kjqZ5x122PTjVkK/BoulderBuddy---User-Flow?node-id=0-1&t=KUNY5nsOsnGD38s7-1
+
 ![User Flow Diagram](./readMeImages/userFlowDiagram.png)
+
+## Wireframe
+
+- https://www.figma.com/design/T8ESTC6kHkRo3uVgbAUCy9/BoulderBuddy---Wireframe?node-id=0-1&t=Y1haAzSDPsolfBaK-1
+
+![Wireframe](./readMeImages/wireframe.png)
 
 ## Other Packages used
 
