@@ -18,6 +18,7 @@ import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import Octicons from "@expo/vector-icons/Octicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 //import { Colors } from "@/constants/Colors";
 import { ThemeContext } from "@/context/ThemeContext";
@@ -117,11 +118,20 @@ export default function Index() {
   return (
     <Container style={styles.container}>
       <View style={styles.header}>
+        <Pressable>
+          <Ionicons
+            name="menu"
+            size={36}
+            color={theme.text}
+            style={{ marginLeft: 10 }}
+          />
+        </Pressable>
+        <Text style={{ color: theme.text, fontSize: 36 }}>Boulder Buddy</Text>
         <Pressable
           onPress={() =>
             setColorScheme(colorScheme === "light" ? "dark" : "light")
           }
-          style={{ marginLeft: 10 }}
+          style={{ marginRight: 10 }}
         >
           {colorScheme === "dark" ? (
             <Octicons
@@ -173,9 +183,11 @@ export default function Index() {
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
     header: {
-      flexDirection: "row-reverse",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       position: "fixed",
-      backgroundColor: "black",
+      backgroundColor: colorScheme === "dark" ? "light" : "dark",
       top: 0,
     },
     container: {
@@ -242,7 +254,7 @@ function createStyles(theme, colorScheme) {
       justifyContent: "center",
       alignItems: "center",
       bottom: 0,
-      backgroundColor: "black",
+      backgroundColor: colorScheme === "dark" ? "light" : "dark",
     },
   });
 }

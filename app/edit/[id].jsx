@@ -15,7 +15,7 @@ import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Octicons from "@expo/vector-icons/Octicons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import SelectDropdown from "react-native-select-dropdown";
 import * as ImagePicker from "expo-image-picker";
@@ -191,30 +191,14 @@ export default function EditClimbScreen() {
   return (
     <DismissKeyboard>
       <SafeAreaView style={styles.container}>
-        <Pressable
-          onPress={() =>
-            setColorScheme(colorScheme === "light" ? "dark" : "light")
-          }
-          style={{ marginLeft: 10 }}
-        >
-          {colorScheme === "dark" ? (
-            <Octicons
-              name="moon"
-              size={36}
-              color={theme.text}
-              selectable={undefined}
-              style={{ width: 36 }}
-            />
-          ) : (
-            <Octicons
-              name="sun"
-              size={36}
-              color={theme.text}
-              selectable={undefined}
-              style={{ width: 36 }}
-            />
-          )}
-        </Pressable>
+        <View style={styles.header}>
+          <Pressable
+            style={{ marginLeft: 10 }}
+            onPress={() => router.push(`/climbs/${id}`)}
+          >
+            <AntDesign name="doubleleft" size={36} color={theme.text} />
+          </Pressable>
+        </View>
         <View style={styles.inputContainer}>
           <TouchableOpacity onPress={() => pickImage()}>
             <Image source={{ uri: climb.image }} style={styles.image} />
@@ -349,14 +333,6 @@ export default function EditClimbScreen() {
             <Text style={styles.saveButtonText}>Save</Text>
           </Pressable>
           <Pressable
-            onPress={() => router.push(`/climbs/${id}`)}
-            style={[styles.saveButton, { backgroundColor: "green" }]}
-          >
-            <Text style={[styles.saveButtonText, { color: "white" }]}>
-              Cancel
-            </Text>
-          </Pressable>
-          <Pressable
             onPress={removeClimb}
             style={[styles.saveButton, { backgroundColor: "red" }]}
           >
@@ -373,6 +349,14 @@ export default function EditClimbScreen() {
 
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      position: "fixed",
+      backgroundColor: colorScheme === "dark" ? "light" : "dark",
+      top: 0,
+    },
     container: {
       flex: 1,
       width: "100%",

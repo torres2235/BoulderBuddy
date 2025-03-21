@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Octicons from "@expo/vector-icons/Octicons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -41,30 +41,11 @@ export default function ViewClimbScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Pressable
-        onPress={() =>
-          setColorScheme(colorScheme === "light" ? "dark" : "light")
-        }
-        style={{ marginLeft: 10 }}
-      >
-        {colorScheme === "dark" ? (
-          <Octicons
-            name="moon"
-            size={36}
-            color={theme.text}
-            selectable={undefined}
-            style={{ width: 36 }}
-          />
-        ) : (
-          <Octicons
-            name="sun"
-            size={36}
-            color={theme.text}
-            selectable={undefined}
-            style={{ width: 36 }}
-          />
-        )}
-      </Pressable>
+      <View style={styles.header}>
+        <Pressable style={{ marginLeft: 10 }} onPress={() => router.push("/")}>
+          <AntDesign name="doubleleft" size={36} color={theme.text} />
+        </Pressable>
+      </View>
       <Image source={{ uri: climb.image }} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.text}>{climb.title}</Text>
@@ -79,12 +60,6 @@ export default function ViewClimbScreen() {
         <Pressable onPress={() => handlePress(climb.id)} style={styles.Button}>
           <Text style={styles.ButtonText}>Edit</Text>
         </Pressable>
-        <Pressable
-          onPress={() => router.push("/")}
-          style={[styles.Button, { backgroundColor: "red" }]}
-        >
-          <Text style={[styles.ButtonText, { color: "white" }]}>Return</Text>
-        </Pressable>
       </View>
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
     </SafeAreaView>
@@ -93,6 +68,14 @@ export default function ViewClimbScreen() {
 
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      position: "fixed",
+      backgroundColor: colorScheme === "dark" ? "light" : "dark",
+      top: 0,
+    },
     container: {
       flex: 1,
       width: "100%",
