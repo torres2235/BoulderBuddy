@@ -167,10 +167,10 @@ export default function Index() {
         <Pressable onPress={() => router.push("/addClimb")}>
           <AntDesign
             name="plussquareo"
-            size={50}
+            size={40}
             color={theme.text}
             selectable={undefined}
-            style={{ width: 50 }}
+            style={{ width: 40 }}
           />
         </Pressable>
       </View>
