@@ -4,6 +4,7 @@
    <img src="./readMeImages/lightPreview.png" width="40%" height="40%">
    <img src="./readMeImages/darkPreview.png" width="40%" height="40%">
 </p>
+
 ## Get started
 
 1. Install dependencies
