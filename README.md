@@ -1,8 +1,9 @@
 ## Boulder Buddy Preview!
 
-<img src="./readMeImages/lightPreview.png" width="50%" height="50%">
-<img src="./readMeImages/darkPreview.png" width="50%" height="50%">
-
+<p>
+   <img src="./readMeImages/lightPreview.png" width="40%" height="40%">
+   <img src="./readMeImages/darkPreview.png" width="40%" height="40%">
+</p>
 ## Get started
 
 1. Install dependencies
