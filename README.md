@@ -1,3 +1,8 @@
+## Boulder Buddy Preview!
+
+![Screenshot 1](./readMeImages/lightPreview.png)
+![Screenshot 2](./readMeImages/darkPreview.png)
+
 ## Get started
 
 1. Install dependencies

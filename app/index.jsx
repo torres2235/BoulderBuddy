@@ -205,6 +205,7 @@ function createStyles(theme, colorScheme) {
       fontWeight: "bold",
       fontSize: 32,
       color: theme.text,
+      backgroundColor: theme.background,
     },
     separator: {
       height: 1,
@@ -255,6 +256,9 @@ function createStyles(theme, colorScheme) {
       alignItems: "center",
       bottom: 0,
       backgroundColor: colorScheme === "dark" ? "light" : "dark",
+      borderTopColor: "grey",
+      borderTopWidth: 1,
+      paddingTop: 10,
     },
   });
 }

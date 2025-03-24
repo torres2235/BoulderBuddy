@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -30,6 +31,9 @@ const DismissKeyboard = ({ children }) => (
     {children}
   </TouchableWithoutFeedback>
 );
+
+const dimensions = Dimensions.get("window");
+const imageWidth = dimensions.width;
 
 export default function AddClimb() {
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext); // styles
@@ -358,8 +362,8 @@ function createStyles(theme, colorScheme) {
       backgroundColor: theme.background,
     },
     image: {
-      width: 300,
-      height: 300,
+      width: imageWidth,
+      height: imageWidth,
       //flex: 1,
       //resizeMode: "cover",
       //justifyContent: "center",
