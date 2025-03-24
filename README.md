@@ -1,6 +1,6 @@
 ## Boulder Buddy Preview!
 
-![Screenshot 1](./readMeImages/lightPreview.png) ![Screenshot 2](./readMeImages/darkPreview.png)
+![Screenshot 1](./readMeImages/lightPreview.png width=50% height=50%) ![Screenshot 2](./readMeImages/darkPreview.png width=50% height=50%)
 
 ## Get started
 
