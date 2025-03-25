@@ -12,7 +12,7 @@
 2. Enter the file from your bash terminal
 
    ```bash
-   cd BoulderBuddy/
+   cd 'your-install-folder'/BoulderBuddy/
    ```
 
 3. Install dependencies
