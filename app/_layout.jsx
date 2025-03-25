@@ -8,8 +8,9 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
-          <Stack.Screen name="climbs/view[id]" />
-          <Stack.Screen name="climbs/edit[id]" />
+          <Stack.Screen name="climbs/[id]" />
+          <Stack.Screen name="edit/[id]" />
+          <Stack.Screen name="addClimb" />
         </Stack>
       </SafeAreaProvider>
     </ThemeProvider>

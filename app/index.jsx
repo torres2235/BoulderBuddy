@@ -198,8 +198,7 @@ function createStyles(theme, colorScheme) {
     flatListContainer: {
       flex: 1,
       flexDirection: "column",
-      flexWrap: "wrap",
-      justifyContent: Platform.OS === "web" ? "flex-start" : "space-evenly",
+      justifyContent: "flex-start",
     },
     heading: {
       fontWeight: "bold",
@@ -219,7 +218,6 @@ function createStyles(theme, colorScheme) {
       width: 200,
       height: 200,
       marginHorizontal: "auto",
-      //padding: 5,
       borderWidth: 1,
       borderColor: "#1e1e1e",
       borderRadius: 15,
