@@ -5,15 +5,23 @@
    <img src="./readMeImages/darkPreview.png" width="40%" height="40%">
 </p>
 
-## Get started
+## Clone and run locally!
 
-1. Install dependencies
+1. Clone the Repo above
+
+2. Enter the file from your bash terminal
+
+   ```bash
+   cd BoulderBuddy/
+   ```
+
+3. Install dependencies
 
    ```bash
    npm install
    ```
 
-2. Start the app
+4. Start the app
 
    ```bash
     npx expo start
