@@ -89,7 +89,7 @@ export default function Index() {
     <View style={styles.climbItem}>
       <TouchableOpacity
         onPress={() => handlePress(item.id)}
-        style={styles.image}
+        style={styles.imageContainer}
       >
         <Image source={{ uri: item.image }} style={styles.image} />
       </TouchableOpacity>
@@ -116,7 +116,7 @@ export default function Index() {
   );
 
   return (
-    <Container style={styles.container}>
+    <Container edges={["top"]} style={styles.container}>
       <View style={styles.header}>
         <Pressable>
           <Ionicons
@@ -153,7 +153,7 @@ export default function Index() {
         </Pressable>
       </View>
 
-      <View style={{ flex: 1, flexDirection: "column", height: 500 }}>
+      <View style={styles.mainContentContainer}>
         <SectionList
           sections={sections}
           renderItem={renderSection}
@@ -182,17 +182,28 @@ export default function Index() {
 
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.background,
+    },
     header: {
       flexDirection: "row",
+      height: 56,
       justifyContent: "space-between",
       alignItems: "center",
       position: "fixed",
       backgroundColor: colorScheme === "dark" ? "light" : "dark",
       top: 0,
     },
-    container: {
+    mainContentContainer: {
       flex: 1,
-      height: "100%",
+      flexDirection: "column",
+      padding: 18,
+    },
+    heading: {
+      fontWeight: 600, // semi-bold
+      fontSize: 36,
+      color: theme.text,
       backgroundColor: theme.background,
     },
     flatListContainer: {
@@ -200,20 +211,7 @@ function createStyles(theme, colorScheme) {
       flexDirection: "column",
       justifyContent: "flex-start",
     },
-    heading: {
-      fontWeight: "bold",
-      fontSize: 32,
-      color: theme.text,
-      backgroundColor: theme.background,
-    },
-    separator: {
-      height: 1,
-      backgroundColor: theme.text,
-      width: "50%",
-      maxWidth: 300,
-      marginHorizontal: "auto",
-      margin: 15,
-    },
+
     climbItem: {
       width: 200,
       height: 200,
@@ -224,6 +222,21 @@ function createStyles(theme, colorScheme) {
       borderColor: theme.text,
       background: theme.background,
       color: theme.text,
+    },
+    imageContainer: {
+      width: "100%",
+      height: "100%",
+      flex: 1,
+      borderTopLeftRadius: 14,
+      borderTopRightRadius: 14,
+    },
+    image: {
+      width: "100%",
+      height: "100%",
+      resizeMode: "cover",
+      justifyContent: "center",
+      borderTopLeftRadius: 14,
+      borderTopRightRadius: 14,
     },
     climbTitle: {
       fontWeight: "bold",
@@ -239,24 +252,25 @@ function createStyles(theme, colorScheme) {
     climbText: {
       color: theme.text,
     },
-    image: {
-      width: "100%",
-      height: "100%",
-      flex: 1,
-      resizeMode: "cover",
-      justifyContent: "center",
-      borderTopLeftRadius: 14,
-      borderTopRightRadius: 14,
+    separator: {
+      height: 1,
+      backgroundColor: theme.text,
+      width: "50%",
+      maxWidth: 300,
+      marginHorizontal: "auto",
+      margin: 15,
     },
     footer: {
       position: "fixed",
       justifyContent: "center",
       alignItems: "center",
+      //height: 44,
       bottom: 0,
       backgroundColor: colorScheme === "dark" ? "light" : "dark",
       borderTopColor: "grey",
       borderTopWidth: 1,
       paddingTop: 10,
+      backgroundColor: "white",
     },
   });
 }
