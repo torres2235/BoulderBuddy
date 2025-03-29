@@ -11,7 +11,6 @@ import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Octicons from "@expo/vector-icons/Octicons";
 
 import { ThemeContext } from "@/context/ThemeContext";
@@ -53,7 +52,7 @@ export default function ViewClimbScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Pressable style={{ marginLeft: 10 }} onPress={() => router.push("/")}>
+        <Pressable style={{ marginLeft: 25 }} onPress={() => router.push("/")}>
           <Octicons name="chevron-left" size={36} color={theme.text} />
         </Pressable>
         <Text style={styles.headerText}>{climb.title}</Text>
@@ -84,6 +83,7 @@ export default function ViewClimbScreen() {
             : `Date Started: ${climb.date}`}
         </Text>
         <Text style={[styles.text, { fontSize: 24 }]}>Tags: </Text>
+
         <Text style={styles.text}>{climb.tags}</Text>
       </View>
       <View style={styles.buttonContainer}>

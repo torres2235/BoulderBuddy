@@ -14,7 +14,7 @@ import {
 import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import Octicons from "@expo/vector-icons/Octicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import SelectDropdown from "react-native-select-dropdown";
@@ -194,11 +194,13 @@ export default function AddClimb() {
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Pressable
-            style={{ marginLeft: 10 }}
+            style={{ marginLeft: 25 }}
             onPress={() => router.push("/")}
           >
-            <AntDesign name="doubleleft" size={36} color={theme.text} />
+            <Octicons name="chevron-left" size={36} color={theme.text} />
           </Pressable>
+          <Text style={styles.headerText}>Add New Climb</Text>
+          <View />
         </View>
 
         <View style={styles.inputContainer}>
@@ -356,17 +358,24 @@ function createStyles(theme, colorScheme) {
       backgroundColor: colorScheme === "dark" ? "light" : "dark",
       top: 0,
     },
+    headerText: {
+      textAlign: "center",
+      color: theme.text,
+      fontSize: 36,
+      fontWeight: 600,
+    },
     container: {
       flex: 1,
       width: "100%",
       backgroundColor: theme.background,
     },
     image: {
-      width: imageWidth,
-      height: imageWidth,
+      width: "85%",
+      aspectRatio: 1,
       //flex: 1,
       //resizeMode: "cover",
       //justifyContent: "center",
+      borderRadius: 8,
       borderColor: theme.text,
       borderWidth: 1,
     },

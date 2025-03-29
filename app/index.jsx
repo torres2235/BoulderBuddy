@@ -164,10 +164,10 @@ export default function Index() {
         <Pressable onPress={() => router.push("/addClimb")}>
           <AntDesign
             name="plussquareo"
-            size={40}
+            size={35}
             color={theme.black}
             selectable={undefined}
-            style={{ width: 40 }}
+            style={{ width: 35 }}
           />
         </Pressable>
       </View>
@@ -270,7 +270,8 @@ function createStyles(theme, colorScheme) {
       backgroundColor: colorScheme === "dark" ? "light" : "dark",
       borderTopColor: "grey",
       borderTopWidth: 1,
-      paddingTop: 10,
+      paddingTop: 5,
+      paddingBottom: 30,
       backgroundColor: "white",
     },
   });
