@@ -20,7 +20,6 @@ import Octicons from "@expo/vector-icons/Octicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import { Colors } from "@/constants/Colors";
 import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/ClimbItems";
 

@@ -14,8 +14,6 @@ export const Colors = {
   light: {
     text: black,
     background: lightBackground,
-    icon: black,
-    button: blue,
     pink: "#EA9997",
     orange: "#FA490A",
     yellow: "#EBCF2C", // secondary
@@ -23,14 +21,12 @@ export const Colors = {
     blue: "#116AC4", // accent
     purple: "#463665",
     black: "#1E1E1E",
-    white: "f5f5f5",
+    white: "#f5f5f5",
     red: "#C20C2A", // primary
   },
   dark: {
     text: white,
     background: darkBackground,
-    icon: red,
-    button: white,
     pink: "#EA9997",
     orange: "#FA490A",
     yellow: "#EBCF2C", // secondary
@@ -38,7 +34,7 @@ export const Colors = {
     blue: "#116AC4", // accent
     purple: "#463665",
     black: "#1E1E1E",
-    white: "f5f5f5",
+    white: "#f5f5f5",
     red: "#C20C2A", // primary
   },
 };

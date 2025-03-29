@@ -11,7 +11,8 @@ import { useState, useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import Octicons from "@expo/vector-icons/Octicons";
 
 import { ThemeContext } from "@/context/ThemeContext";
 
@@ -53,22 +54,50 @@ export default function ViewClimbScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Pressable style={{ marginLeft: 10 }} onPress={() => router.push("/")}>
-          <AntDesign name="doubleleft" size={36} color={theme.text} />
+          <Octicons name="chevron-left" size={36} color={theme.text} />
         </Pressable>
+        <Text style={styles.headerText}>{climb.title}</Text>
+        <View />
       </View>
       <Image source={{ uri: climb.image }} style={styles.image} />
       <View style={styles.textContainer}>
-        <Text style={styles.text}>{climb.title}</Text>
-        <Text style={styles.text}>{climb.grade}</Text>
-        <Text style={styles.text}>{climb.date}</Text>
-        <Text style={styles.text}>{climb.color}</Text>
-        <Text style={styles.text}>{climb.rating}</Text>
-        <Text style={styles.text}>{climb.completed}</Text>
+        <View style={styles.gradeInfo}>
+          <View
+            style={[
+              styles.colorIndicator,
+              { backgroundColor: theme[climb.color] },
+            ]}
+          />
+          <Text style={[styles.text, { fontWeight: "bold", fontSize: 24 }]}>
+            {climb.grade}
+          </Text>
+        </View>
+        <View style={styles.ratingInfo}>
+          <Octicons name="feed-star" size={24} color={theme.text} />
+          <Text style={[styles.text, { fontWeight: 450, fontSize: 24 }]}>
+            {climb.rating}/5
+          </Text>
+        </View>
+        <Text style={{ color: "grey" }}>
+          {climb.completed === true
+            ? `Date Completed: ${climb.date}`
+            : `Date Started: ${climb.date}`}
+        </Text>
+        <Text style={[styles.text, { fontSize: 24 }]}>Tags: </Text>
         <Text style={styles.text}>{climb.tags}</Text>
       </View>
-      <View style={styles.textContainer}>
-        <Pressable onPress={() => handlePress(climb.id)} style={styles.Button}>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          onPress={() => handlePress(climb.id)}
+          style={[styles.Button, { backgroundColor: theme.blue }]}
+        >
           <Text style={styles.ButtonText}>Edit</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => handlePress(climb.id)}
+          style={[styles.Button, { backgroundColor: theme.red }]}
+        >
+          <Text style={styles.ButtonText}>Delete</Text>
         </Pressable>
       </View>
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
@@ -79,12 +108,20 @@ export default function ViewClimbScreen() {
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
     header: {
+      width: "100%",
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
       position: "fixed",
       backgroundColor: colorScheme === "dark" ? "light" : "dark",
       top: 0,
+      marginBottom: 15,
+    },
+    headerText: {
+      textAlign: "center",
+      color: theme.text,
+      fontSize: 36,
+      fontWeight: 600,
     },
     container: {
       flex: 1,
@@ -94,33 +131,52 @@ function createStyles(theme, colorScheme) {
     image: {
       width: imageWidth,
       height: imageWidth,
-      //flex: 1,
-      //resizeMode: "cover",
-      //justifyContent: "center",
-      borderColor: theme.text,
-      borderWidth: 1,
+      borderRadius: 8,
     },
     textContainer: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: "column",
+      justifyContent: "flex-start",
       padding: 10,
-      gap: 6,
+      gap: 10,
       width: "100%",
       maxWidth: 1024,
       marginHorizontal: "auto",
       pointerEvents: "auto",
     },
+    gradeInfo: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+    },
+    colorIndicator: {
+      width: 24,
+      aspectRatio: 1,
+      borderRadius: 30,
+    },
+    ratingInfo: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+    },
     text: {
       color: theme.text,
     },
+    buttonContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+    },
     Button: {
-      backgroundColor: theme.button,
-      borderRadius: 5,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 8,
+      width: "20%",
       padding: 10,
     },
     ButtonText: {
       fontSize: 18,
-      color: colorScheme === "dark" ? "black" : "white",
+      color: theme.white,
     },
   });
 }
