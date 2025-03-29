@@ -60,30 +60,30 @@ export default function EditClimbScreen() {
   const router = useRouter();
 
   const grades = [
-    "v0",
-    "v1",
-    "v2",
-    "v3",
-    "v4",
-    "v5",
-    "v6",
-    "v7",
-    "v8",
-    "v9",
-    "v10",
-    "v11",
-    "v12",
+    "V0",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8",
+    "V9",
+    "V10",
+    "V11",
+    "V12",
   ];
 
   const color = [
-    "Red",
-    "Orange",
-    "Yellow",
-    "Green",
-    "Blue",
-    "Purple",
-    "Pink",
-    "Black",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "pink",
+    "black",
   ];
 
   const rating = [0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];

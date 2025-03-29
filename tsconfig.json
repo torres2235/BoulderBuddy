@@ -11,6 +11,7 @@
     "**/*.tsx",
     "**/*.jsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "constants/Colors.js"
   ]
 }

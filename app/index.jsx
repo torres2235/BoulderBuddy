@@ -20,7 +20,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-//import { Colors } from "@/constants/Colors";
+import { Colors } from "@/constants/Colors";
 import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/ClimbItems";
 
@@ -93,26 +93,24 @@ export default function Index() {
       >
         <Image source={{ uri: item.image }} style={styles.image} />
       </TouchableOpacity>
+      <Text style={styles.dateText}>{item.date}</Text>
       <Text style={styles.climbTitle}>{item.title}</Text>
-      <View style={styles.climbTextContainer}>
-        <Text style={styles.climbText}>{item.grade}</Text>
-        <Text style={styles.climbText}>{item.color}</Text>
-        <Text style={styles.climbText}>{item.date}</Text>
+      <View
+        style={[styles.colorIndicator, { backgroundColor: theme[item.color] }]}
+      >
+        <Text style={styles.climbGrade}>{item.grade}</Text>
       </View>
     </View>
   );
 
   const renderSection = ({ item }) => (
-    <View>
-      <FlatList
-        data={item.list}
-        numColumns={2}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.title}
-        contentContainerStyle={styles.flatListContainer}
-      />
-      <View style={styles.separator} />
-    </View>
+    <FlatList
+      data={item.list}
+      numColumns={2}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      //style={styles.flatListContainer}
+    />
   );
 
   return (
@@ -198,67 +196,71 @@ function createStyles(theme, colorScheme) {
     mainContentContainer: {
       flex: 1,
       flexDirection: "column",
-      padding: 18,
     },
     heading: {
       fontWeight: 600, // semi-bold
       fontSize: 36,
       color: theme.text,
       backgroundColor: theme.background,
+      paddingLeft: 16,
+      paddingBottom: 10,
     },
     flatListContainer: {
       flex: 1,
       flexDirection: "column",
       justifyContent: "flex-start",
     },
-
     climbItem: {
-      width: 200,
-      height: 200,
+      width: "45%",
+      //height: "auto",
+      minHeight: 200,
       marginHorizontal: "auto",
-      borderWidth: 1,
-      borderColor: "#1e1e1e",
-      borderRadius: 15,
       borderColor: theme.text,
       background: theme.background,
       color: theme.text,
+      marginBottom: 20,
     },
     imageContainer: {
       width: "100%",
-      height: "100%",
+      aspectRatio: 1,
       flex: 1,
-      borderTopLeftRadius: 14,
-      borderTopRightRadius: 14,
+      marginBottom: 10,
+
+      // drop shadow
+      shadowColor: "#171717",
+      shadowOffset: { width: 1, height: 4 },
+      shadowOpacity: 0.4,
+      shadowRadius: 4,
     },
     image: {
       width: "100%",
-      height: "100%",
+      aspectRatio: 1,
       resizeMode: "cover",
       justifyContent: "center",
-      borderTopLeftRadius: 14,
-      borderTopRightRadius: 14,
+      borderRadius: 8,
     },
     climbTitle: {
-      fontWeight: "bold",
-      textDecorationLine: "underline",
-      fontSize: 18,
+      fontSize: 20,
+      //fontWeight: 600,
       color: theme.text,
     },
-    climbTextContainer: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "space-around",
+    dateText: {
+      size: 12,
+      color: "grey",
     },
-    climbText: {
-      color: theme.text,
+    colorIndicator: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      //alignSelf: "flex-start",
+      height: 22,
+      width: 35,
+      borderRadius: 20,
+      backgroundColor: "grey",
     },
-    separator: {
-      height: 1,
-      backgroundColor: theme.text,
-      width: "50%",
-      maxWidth: 300,
-      marginHorizontal: "auto",
-      margin: 15,
+    climbGrade: {
+      fontSize: 16,
+      color: "white",
     },
     footer: {
       position: "fixed",
