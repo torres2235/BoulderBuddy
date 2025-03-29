@@ -6,7 +6,7 @@ const green = "#2E6B63";
 const blue = "#116AC4"; // accent
 const purple = "#463665";
 const black = "#1E1E1E";
-const white = "f5f5f5";
+const white = "#F5F5F5";
 const lightBackground = "#F2E9E4";
 const darkBackground = "#22223B";
 

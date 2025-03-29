@@ -166,7 +166,7 @@ export default function Index() {
           <AntDesign
             name="plussquareo"
             size={40}
-            color={theme.text}
+            color={theme.black}
             selectable={undefined}
             style={{ width: 40 }}
           />
