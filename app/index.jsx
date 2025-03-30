@@ -165,7 +165,7 @@ export default function Index() {
           <AntDesign
             name="plussquareo"
             size={35}
-            color={theme.black}
+            color={theme.text}
             selectable={undefined}
             style={{ width: 35 }}
           />
@@ -267,12 +267,11 @@ function createStyles(theme, colorScheme) {
       alignItems: "center",
       //height: 44,
       bottom: 0,
-      backgroundColor: colorScheme === "dark" ? "light" : "dark",
+      backgroundColor: theme.footer,
       borderTopColor: "grey",
       borderTopWidth: 1,
       paddingTop: 5,
       paddingBottom: 30,
-      backgroundColor: "white",
     },
   });
 }

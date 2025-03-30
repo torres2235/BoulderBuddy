@@ -8,12 +8,13 @@ const purple = "#463665";
 const black = "#1E1E1E";
 const white = "#F5F5F5";
 const lightBackground = "#F2E9E4";
-const darkBackground = "#22223B";
+const darkBackground = "#292929";
 
 export const Colors = {
   light: {
     text: black,
     background: lightBackground,
+    footer: "white",
     pink: "#EA9997",
     orange: "#FA490A",
     yellow: "#EBCF2C", // secondary
@@ -27,6 +28,7 @@ export const Colors = {
   dark: {
     text: white,
     background: darkBackground,
+    footer: "#373F47",
     pink: "#EA9997",
     orange: "#FA490A",
     yellow: "#EBCF2C", // secondary
